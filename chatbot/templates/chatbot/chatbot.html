@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SilverBot - Jewelry Chat Assistant</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; }
+        .chat-container {
+            width: 500px; margin: 50px auto; background: white;
+            border-radius: 12px; padding: 20px; box-shadow: 0px 0px 12px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        .messages { height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fafafa; }
+        .message { display: flex; align-items: flex-start; margin: 10px 0; gap: 8px; }
+        .msg-text { padding: 10px 14px; border-radius: 15px; max-width: 70%; line-height: 1.4; }
+
+        /* User messages */
+        .user { justify-content: flex-end; }
+        .user .msg-text { background: #d1e7ff; color: #003366; text-align: right; }
+        .user .avatar { order: 2; }
+
+        /* Bot messages */
+        .bot { justify-content: flex-start; }
+        .bot .msg-text { background: #e7ffe7; color: #004d00; text-align: left; }
+
+        /* Input area */
+        .input-row {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .send-btn { background: purple; }
+        .send-btn:hover { background: darkviolet; }
+        .end-btn { background: red; }
+        .end-btn:hover { background: darkred; }
+
+        /* Cart button (still on top) */
+        .cart-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: orange;
+            border-radius: 6px;
+        }
+        .cart-btn:hover { background: darkorange; }
+
+        /* Avatar icons */
+        .avatar { width: 35px; height: 35px; border-radius: 50%; background: #ccc; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .user .avatar { background: #3399ff; color: white; }
+        .bot .avatar { background: #4CAF50; color: white; }
+
+        /* Product card */
+        .product-card {
+            margin: 8px 0 0 45px; /* align below bot bubble */
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            background: #fff;
+            max-width: 250px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+        }
+        .product-card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .add-btn {
+            width: 100%;
+            padding: 8px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-btn:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>💎 SilverBot</h2>
+        <button class="cart-btn" onclick="sendMessage('cart')">🛒 View Cart</button>
+        <div class="messages" id="chatbox"></div>
+        <div class="input-row">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button class="send-btn" onclick="sendMessage()">Send</button>
+            <button class="end-btn" onclick="endConversation()">❌ End</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage(customMsg=null) {
+            let input = document.getElementById("userInput");
+            let chatbox = document.getElementById("chatbox");
+            let message = customMsg || input.value;
+
+            if (message.trim() === "") return;
+
+            // Show user message
+            let userMsg = document.createElement("div");
+            userMsg.className = "message user";
+            userMsg.innerHTML = `<div class="msg-text">${message}</div><div class="avatar">👤</div>`;
+            chatbox.appendChild(userMsg);
+
+            // Call Django backend
+            fetch(`/get-response/?msg=${encodeURIComponent(message)}`)
+            .then(res => res.json())
+            .then(data => {
+                let botMsg = document.createElement("div");
+                botMsg.className = "message bot";
+                botMsg.innerHTML = `<div class="avatar">🤖</div><div class="msg-text">${data.reply}</div>`;
+                chatbox.appendChild(botMsg);
+
+                // Agar product image hai
+                if (data.img) {
+                    let productCard = document.createElement("div");
+                    productCard.className = "product-card";
+                    productCard.innerHTML = `
+                        <img src="${data.img}" alt="Product">
+                        <button class="add-btn" onclick="sendMessage('add')">➕ Add to Cart</button>
+                    `;
+                    chatbox.appendChild(productCard);
+                }
+
+                chatbox.scrollTop = chatbox.scrollHeight;
+
+                if (message.toLowerCase() === "end") {
+                    setTimeout(() => { chatbox.innerHTML = ""; }, 1000);
+                }
+            })
+            .catch(err => {
+                let errorMsg = document.createElement("div");
+                errorMsg.className = "message bot";
+                errorMsg.innerHTML = `<div class="avatar">⚠️</div><div class="msg-text">Error: Could not connect to server.</div>`;
+                chatbox.appendChild(errorMsg);
+            });
+
+            input.value = "";
+        }
+
+        function endConversation() {
+            sendMessage("end");
+        }
+    </script>
+</body>
+</html>

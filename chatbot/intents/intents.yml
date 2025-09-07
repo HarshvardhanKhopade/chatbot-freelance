@@ -1,0 +1,119 @@
+intents:
+  greeting:
+    - hi
+    - hello
+    - hey silverbot
+    - good morning
+    - good evening
+    - how are you
+    - nice to meet you
+
+  product_search:
+    - show me rings
+    - i want bangles
+    - do you have earrings
+    - show me necklaces
+    - anklets collection please
+    - silver toe rings
+    - bridal sets
+    - kids anklets
+    - men’s silver chains
+    - oxidised silver jewelry
+
+  price_filter:
+    - show me something under 2000
+    - rings under ₹1000
+    - bangles below 1500
+    - earrings less than 800
+    - show me items above 5000
+    - premium collection above 10000
+    - cheapest earrings you have
+    - show me budget friendly jewelry
+    - most expensive necklace
+    - anklets under 1200
+
+  best_sellers:
+    - suggest best selling items
+    - what’s popular right now
+    - recommend something for gifting
+    - trending jewelry this month
+    - top 5 rings
+    - best selling bangles
+    - show me hot selling chains
+    - which necklace is most demanded
+    - suggest some new arrivals
+    - which jewelry is most in demand
+
+  cart_management:
+    - add ring to cart
+    - add necklace
+    - add 2 bangles
+    - show my cart
+    - what’s in my cart
+    - remove ring from cart
+    - clear my cart
+    - add earrings under 1000
+    - add chain
+    - cart total please
+
+  inquiry:
+    - i’m interested
+    - contact me
+    - i want to buy
+    - share my details
+    - i want a callback
+    - book my order
+    - can you take my number
+    - please call me
+    - i want wholesale rates
+    - send me a quotation
+
+  bulk_orders:
+    - price for 20 rings
+    - can i buy 100 earrings
+    - bulk rate for chains
+    - do you sell wholesale
+    - minimum order quantity
+    - moq for bangles
+    - bulk price for anklets
+    - 50 silver rings cost
+    - 25 necklaces price
+    - do you give bulk discount
+
+  shipping_payment:
+    - do you deliver across india
+    - shipping charges
+    - free delivery above how much
+    - do you ship worldwide
+    - how many days for delivery
+    - cash on delivery available
+    - do you accept credit card
+    - do you take upi payments
+    - payment options
+    - courier partners
+
+  business_info:
+    - where is your store located
+    - do you have a catalog
+    - show me full catalog
+    - can i see new designs
+    - do you customize jewelry
+    - do you sell gold jewelry also
+    - are you manufacturer or reseller
+    - do you offer franchise
+    - how to become your distributor
+    - your gst number
+
+categories:
+  ring: Rings
+  rings: Rings
+  bangle: Bangles
+  bangles: Bangles
+  necklace: Necklaces
+  necklaces: Necklaces
+  chain: Chains
+  chains: Chains
+  earring: Earrings
+  earrings: Earrings
+  anklet: Anklets
+  anklets: Anklets
