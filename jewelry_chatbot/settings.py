@@ -96,15 +96,13 @@ WSGI_APPLICATION = 'jewelry_chatbot.wsgi.application'
 #         'PORT': '5432',
 #     }
 # }
-
 import dj_database_url
 
 DATABASES = {
-    "default": dj_database_url.config(
-        # Agar Render ke env vars me DATABASE_URL set hai to wo use karega
-        default="postgres://postgres:password@localhost:5432/silver_db",
+    'default': dj_database_url.config(
+        default="postgres://postgres:140023@localhost:5432/silver_db",  # local fallback
         conn_max_age=600,
-        ssl_require=False  
+        ssl_require=False  # Render ke liye agar DB SSL enforce hai to True kar dena
     )
 }
 
