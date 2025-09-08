@@ -16,7 +16,15 @@ SECRET_KEY = 'django-insecure-u(+4&umf2xt9*vu(=g0%xri(3wefq*pjfd8jx2=vu+kbm52sln
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".ngrok-free.app"]
+# ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".ngrok-free.app"]
+
+ALLOWED_HOSTS = [
+    "whatsapp-jewelry-bot.onrender.com",
+    "localhost",
+    "127.0.0.1"
+]
+
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -39,6 +47,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 ROOT_URLCONF = 'jewelry_chatbot.urls'
 
 # Templates setup
@@ -58,6 +69,13 @@ TEMPLATES = [
     },
 ]
 
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 WSGI_APPLICATION = 'jewelry_chatbot.wsgi.application'
 
 # Database
@@ -68,16 +86,26 @@ WSGI_APPLICATION = 'jewelry_chatbot.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'silver_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '140023',  
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'silver_db',
-        'USER': 'postgres',
-        'PASSWORD': '140023',  
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    "default": dj_database_url.config(
+        default="postgres://postgres:password@localhost:5432/silver_db",
+        conn_max_age=600
+    )
 }
+
 
 import os
 
