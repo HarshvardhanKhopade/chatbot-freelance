@@ -104,7 +104,7 @@ DATABASES = {
         # Agar Render ke env vars me DATABASE_URL set hai to wo use karega
         default="postgres://postgres:password@localhost:5432/silver_db",
         conn_max_age=600,
-        ssl_require=False  # Render ke free DB ke liye SSL kabhi kabhi required hota hai, agar error aaye to True karo
+        ssl_require=False  
     )
 }
 
